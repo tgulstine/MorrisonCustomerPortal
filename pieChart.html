@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="Scripts/d3pie.js"></script>
+    </head>
+    <body>
+        <div id="onTimePieChart"></div>
+    </body>
+    <script>
+        var pie = new d3pie("onTimePieChart", {
+            header: {
+                title: {
+                        text: "On-Time Shipments"
+                }
+            },
+            size: {
+                pieOuterRadius: "100%",
+                canvasHeight: 250
+            },
+            data: {
+                sortOrder: "value-asc",
+                smallSegmentGrouping: {
+                    enabled: true,
+                    value: 2,
+                    valueType: "percentage",
+                    label: "Other birds",
+                    color: "#999999"
+                },
+                content: [
+
+                    { label: "On-Time", value: 54, color: "#00FF00" },
+                    { label: "Not On-Time", value: 19, color: "#000000" }
+                ]
+            }
+    });
+    </script>
+</html>

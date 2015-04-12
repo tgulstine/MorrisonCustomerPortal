@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.js"></script>
+        <script type="text/javascript" src="Scripts/underscore.js"></script>
+        <script type="text/javascript" src="Scripts/ng-grid.min.js"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
+
+        <link rel="stylesheet" href="Styles/jquery-ui.css" />
+        <link rel="stylesheet" href="Styles/ng-grid.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+        <link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/bootstrap.min.css">
+        <script>
+                angular.module("morrisonApp", ['ngGrid']).controller("DetailsController", function ($scope) {
+                    var shipperData = { name: "Test Shipper", addr1: "Test Address 1", addr2: "Test Address 2", city: "Test City", region: "Test Region", postalCode: "Test Postal Code" };
+                    var consigneeData = { name: "Test Consignee", addr1: "Test Address 1", addr2: "Test Address 2", city: "Test City", region: "Test Region", postalCode: "Test Postal Code" };
+                    var billToData = { name: "Test Bill To", addr1: "Test Address 1", addr2: "Test Address 2", city: "Test City", region: "Test Region", postalCode: "Test Postal Code" };
+
+                    $scope.ShipperData = shipperData;
+                    $scope.ConsigneeData = consigneeData;
+                    $scope.BillToData = billToData;
+
+                    var physicalFreightGridData =
+                    [
+                        { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" },
+                        { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" },
+                        { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" }
+
+                    ];
+
+                    $scope.PhysicalFreightGridData = physicalFreightGridData;
+
+                    $scope.PhysicalFreightGridColumnData =
+                    [
+                        { field: 'pcs', displayName: 'PCS' },
+                        { field: 'l', displayName: 'L' },
+                        { field: 'w', displayName: 'W' },
+                        { field: 'h', displayName: 'H' },
+                        { field: 'wgt', displayName: 'WGT' },
+                        { field: 'ft3', displayName: 'ft3' }
+                    ];
+
+
+                    $scope.physicalFreightGrid = {
+                        data: 'PhysicalFreightGridData',
+                        columnDefs: 'PhysicalFreightGridColumnData',
+                        selectedItems: [],
+                        multiSelect: false
+                    }
+
+                    var masterWaybillsGridData =
+                    [
+                        { MAWB: "016 12345678", carrier: "UA0769", org: "ORD", dst: "SFO", etd: "2014-12-22", eta: "2014-12-22", status: "ARRIVED" },
+                        { MAWB: "", carrier: "UA5244", org: "SFO", dst: "JAC", etd: "2014-12-22", eta: "2014-12-22", status: "ARRIVED" }
+                    ];
+
+                    $scope.MasterWaybillsGridData = masterWaybillsGridData;
+
+                    $scope.MasterWaybillsGridColumnData = [
+                         { field: 'mawb', displayName: 'MAWB' },
+                         { field: 'carrier', displayName: 'CARRIER' },
+                         { field: 'ord', displayName: 'ORD' },
+                         { field: 'dst', displayName: 'DST' },
+                         { field: 'etd', displayName: 'ETD' },
+                         { field: 'eta', displayName: 'ETA' },
+                         { field: 'status', displayName: 'STATUS' }
+                    ];
+
+                    $scope.masterWaybillsGrid = {
+                        data: 'MasterWaybillsGridData',
+                        columnDefs: 'MasterWaybillsGridColumnData',
+                        selectedItems: [],
+                        multiSelect: false
+                    }
+                });
+        </script>
+
+    </head>
+    <body ng-app="morrisonApp">
+        <div class="outerPanel" ng-controller="DetailsController">
+            <div class="panelsRow">
+                <!-- Contains the Shipper table -->
+                <div ng-include="'shipperPanel.html'" class="shipperPanel detailsPanelDiv"></div>
+                <!-- Contains the Consignee table -->
+                <div ng-include="'consigneePanel.html'" class="consigneePanel detailsPanelDiv"></div>
+                <!-- Contains the Bill To table -->
+                <div ng-include="'billToPanel.html'" class="billToPanel detailsPanelDiv"></div>
+            </div>
+            <div class="clearBoth"></div>
+            <div class="panelsRow">
+                <div id="physicalFreightDiv" class="detailsPanelDiv">
+                    <h3>Physical Freight</h3>
+                    <div id="physicalFreightInfo">
+                        <table class="table table-bordered" style="width: 345px; margin: 0 auto; margin-bottom: 20px; text-align: center">
+                            <tr>
+                                <th>Piece</th>
+                                <th>Weight</th>
+                                <th>UOM</th>
+                                <th>DIM</th>
+                                <th>CHG</th>
+                                <th>Cu</th>
+                            </tr>
+                            <tr>
+                                <td>00</td>
+                                <td>00000</td>
+                                <td>KG</td>
+                                <td>000</td>
+                                <td>000</td>
+                                <td>000</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Contains the Physical Freight grid and data -->
+                    <div class="physicalFreightGrid" ng-grid="physicalFreightGrid"></div>
+                    <div class="physicalFreightDescription"><span style="font-size: 150%; margin-left: 15px">Description</span></div>
+                </div>
+
+                <div class="currentStatusAndRemarksPanels">
+                    <div id="currentStatusDiv" class="detailsPanelDiv">
+                        <h3 class="currentStatusLabel">Current Status</h3>
+                        <a href="#" id="link">DELIVERED (OR END OF RESPONSIBILITY)</a>
+                        <br />
+                        <input type="submit" value="Display Hard Copy POD" class="btn btn-default" name="button" />
+                    </div>
+
+                    <div id="remarksDiv" class="detailsPanelDiv">
+                        <h3 class="remarks">Remarks</h3>
+                        <textarea cols="35.5" rows="4.5"></textarea>
+                    </div>
+                </div>
+
+                <div id="masterWaybillsDiv" class="detailsPanelDiv">
+                    <h3>Master Waybills<a href="#" id="newWaybillLink">New Waybill</a></h3>
+                    <!-- Contains the Master Waybills grid and data -->
+                    <div class="masterWaybillsGrid" ng-grid="masterWaybillsGrid"></div>
+                </div>
+            </div>
+        </body>
+    </html>

@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.js"></script>
+        <script type="text/javascript" src="Scripts/underscore.js"></script>
+        <script type="text/javascript" src="Scripts/ng-grid.min.js"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
+
+        <script>
+            angular.module("morrisonApp", ['ngGrid']).controller("DashboardController", function ($scope) {
+                var currentDate = new Date("03/06/2015");
+
+                // fake milestone data... today is 3/6/2015
+                var milestoneData = [
+                                            { AWB: "089-6934265-5", MilestoneType: "Pickup", DateDue: "03/02/2015", DateCompleted: "03/02/2015" },
+                                            { AWB: "089-6934265-5", MilestoneType: "Origin Scan", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "089-6934265-5", MilestoneType: "Origin Shipped", DateDue: "03/06/2015", DateCompleted: "" },
+                                            { AWB: "089-6934265-5", MilestoneType: "Destination Arrival", DateDue: "03/06/2015", DateCompleted: "" },
+                                            { AWB: "089-6934265-5", MilestoneType: "Out for Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+                                            { AWB: "089-6934265-5", MilestoneType: "Proof of Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+
+                                            { AWB: "014-3218614-4", MilestoneType: "Pickup", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "014-3218614-4", MilestoneType: "Origin Scan", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "014-3218614-4", MilestoneType: "Origin Shipped", DateDue: "03/05/2015", DateCompleted: "03/05/2015" },
+                                            { AWB: "014-3218614-4", MilestoneType: "Destination Arrival", DateDue: "03/08/2015", DateCompleted: "" },
+                                            { AWB: "014-3218614-4", MilestoneType: "Out for Delivery", DateDue: "03/09/2015", DateCompleted: "" },
+                                            { AWB: "014-3218614-4", MilestoneType: "Proof of Delivery", DateDue: "03/09/2015", DateCompleted: "" },
+
+                                            { AWB: "043-2139573-4", MilestoneType: "Pickup", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "043-2139573-4", MilestoneType: "Origin Scan", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "043-2139573-4", MilestoneType: "Origin Shipped", DateDue: "03/05/2015", DateCompleted: "03/05/2015" },
+                                            { AWB: "043-2139573-4", MilestoneType: "Destination Arrival", DateDue: "03/05/2015", DateCompleted: "03/05/2015" },
+                                            { AWB: "043-2139573-4", MilestoneType: "Out for Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+                                            { AWB: "043-2139573-4", MilestoneType: "Proof of Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+
+                                            { AWB: "089-0347293-4", MilestoneType: "Pickup", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "089-0347293-4", MilestoneType: "Origin Scan", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "089-0347293-4", MilestoneType: "Origin Shipped", DateDue: "03/05/2015", DateCompleted: "03/05/2015" },
+                                            { AWB: "089-0347293-4", MilestoneType: "Destination Arrival", DateDue: "03/05/2015", DateCompleted: "" },
+                                            { AWB: "089-0347293-4", MilestoneType: "Out for Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+                                            { AWB: "089-0347293-4", MilestoneType: "Proof of Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+
+                                            { AWB: "078-3751392-4", MilestoneType: "Pickup", DateDue: "03/03/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "078-3751392-4", MilestoneType: "Origin Scan", DateDue: "03/04/2015", DateCompleted: "03/04/2015" },
+                                            { AWB: "078-3751392-4", MilestoneType: "Origin Shipped", DateDue: "03/05/2015", DateCompleted: "03/05/2015" },
+                                            { AWB: "078-3751392-4", MilestoneType: "Destination Arrival", DateDue: "03/06/2015", DateCompleted: "03/06/2015" },
+                                            { AWB: "078-3751392-4", MilestoneType: "Out for Delivery", DateDue: "03/07/2015", DateCompleted: "" },
+                                            { AWB: "078-3751392-4", MilestoneType: "Proof of Delivery", DateDue: "03/07/2015", DateCompleted: "" }
+                ];
+
+
+                var inTransitGridData =
+                [
+                    { shipper: "Shanghai Auto Parts Mfg, No. 348, Yuanqu Road, Anting Town, Jiading Dist., Shanghai, China (Mainland)", consignee: "ABC Co., Los Angeles, CA", AWB: "089-6934265-5", shipmentDate: "02 / 04 / 2015", arrivalDate: "02 / 12 / 2015" },
+                    { shipper: "Happy Trading CA, 27 Shaughnesey St., Vancouver, BC, Canada", consignee: "Happy Trading USA, 200 West Grand Ave., Woodstock, WI", AWB: "014-3218614-4", shipmentDate: "02 / 05 / 2015", arrivalDate: "02 / 09 / 2015" },
+                    { shipper: "Ideal Systems, 2/F, Tower Two, 88 Container Port Road, HK", consignee: "Apple, 1 Infinite Loop, Cupertino, CA", AWB: "043-2139573-4", shipmentDate: "02 / 07 / 2015", arrivalDate: "02 / 13 / 2015" },
+                    { shipper: "IO Supply Company, 63 Renmin Lu, Qingdao Shi, 266033 Shandong, China", consignee: "McDonald's, 2111 McDonald's Dr., Oak Brook, IL 60523", AWB: "089-0347293-4", shipmentDate: "02 / 13 / 2015", arrivalDate: "02 / 20 / 2015" },
+                    { shipper: "ABI Global, Inc., Urion 30, Puerto Juarez, 02860 Mexico, D.F., Mexico", consignee: "Amazon Com, 410 Terry Avenue North, Seattle, WA 98109", AWB: "078-3751392-4", shipmentDate: "02 / 13 / 2015", arrivalDate: "02 / 18 / 2015" }
+                ];
+
+                $scope.InTransitGridData = inTransitGridData;
+                $scope.MilestoneData = milestoneData;
+
+
+                $scope.InTransitGridColumnDefinitions =
+                [
+                    { field: 'AWB', displayName: 'AWB' },
+                    { field: 'shipper', displayName: 'Shipper' },
+                    { field: 'consignee', displayName: 'Consignee' }
+                ];
+
+                // Shipments is the data for the grid (in quotes, which is weird, but that's how AngularJS wants it)
+                // We also provide the column definitions
+                $scope.inTransitGrid = {
+                    data: 'InTransitGridData',
+                    columnDefs: 'InTransitGridColumnDefinitions',
+                    selectedItems: [],
+                    multiSelect: false,
+                    rowTemplate: 'Templates/gridRowTemplate.html'
+                }
+
+
+                $scope.getColorCoding = function (row) {
+                    var dateDue, dateCompleted, color = "#DFF0D8"; // green
+
+                    for (var i = 0; i < $scope.MilestoneData.length; i++) {
+                        if ($scope.MilestoneData[i].AWB == row.AWB) {
+                            dateDue = new Date($scope.MilestoneData[i].DateDue);
+                            if ($scope.MilestoneData[i].DateCompleted == "") {
+                                if (dateDue < currentDate) {
+                                    color = "#F2DEDE"; // red 
+                                } else {
+                                    if (dateDue.getTime() === currentDate.getTime()) {
+                                        color = "#FCF8E3"; // yellow
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    return color;
+                }
+
+                var recentDeliveriesGridData =
+                [
+                    { origin: "TPE", destination: "SFO", AWB: "089-6934265-5", shipDate: "02/04/2015", commitDate: "02/12/2015", signature: "", date: "" },
+                    { origin: "TPE", destination: "LAX", AWB: "090-6934265-5", shipDate: "02/05/2015", commitDate: "02/13/2015", signature: "", date: "" },
+                    { origin: "BEI", destination: "SFO", AWB: "091-6934265-5", shipDate: "02/06/2015", commitDate: "02/12/2015", signature: "", date: "" },
+                    { origin: "BEI", destination: "LAX", AWB: "092-6934265-5", shipDate: "02/08/2015", commitDate: "02/12/2015", signature: "", date: "" },
+                    { origin: "SHA", destination: "SFO", AWB: "093-6934265-5", shipDate: "02/10/2015", commitDate: "02/12/2015", signature: "", date: "" }
+                ];
+
+                $scope.RecentDeliveriesGridData = recentDeliveriesGridData;
+
+                $scope.RecentDeliveriesGridColumnData = [
+                    { field: 'AWB', displayName: 'AWB' },
+                    { field: 'shipDate', displayName: 'Ship Date' },
+                    { field: 'commitDate', displayName: 'Commit Date' },
+                    { field: 'origin', displayName: 'Origin' },
+                    { field: 'destination', displayName: 'Destination' },
+                    { field: 'signature', displayName: 'Signature' },
+                    { field: 'date', displayName: 'Date' }
+                ];
+
+                $scope.recentDeliveriesGrid = {
+                    data: 'RecentDeliveriesGridData',
+                    columnDefs: 'RecentDeliveriesGridColumnData',
+                    selectedItems: [],
+                    multiSelect: false
+                }
+
+                var inOutGridData =
+                [
+                    { whse: "TPE", date: "SFO", in: "02/01/2015", out: "02/04/2015" },
+                    { whse: "TPE", date: "SFO", in: "02/01/2015", out: "02/04/2015" }
+                ];
+
+                $scope.InOutGridData = inOutGridData;
+
+                $scope.InOutGridColumnDefinitions =
+                [
+                    { field: 'whse', displayName: 'WHSE' },
+                    { field: 'date', displayName: 'Date' },
+                    { field: 'in', displayName: 'In' }
+                ];
+
+                $scope.inOutGrid = {
+                    data: 'InOutGridData',
+                    columnDefs: 'InOutGridColumnDefinitions',
+                    selectedItems: [],
+                    multiSelect: false
+                }
+
+                var usageGridData =
+                [
+                    { whse: "Los Angeles", type: "Floor", avail: "300", used: "280" },
+                    { whse: "Los Angeles", type: "Rack", avail: "530", used: "500" },
+                    { whse: "Los Angeles", type: "Cold", avail: "10", used: "10" },
+                    { whse: "Los Angeles 2", type: "Gen", avail: "40", used: "10" },
+                    { whse: "Maastricht", type: "Rack", avail: "50", used: "50" },
+                    { whse: "Taipei", type: "Rack", avail: "300", used: "280" }
+                ];
+
+                $scope.UsageGridData = usageGridData;
+
+                $scope.UsageGridColumnDefinitions =
+                [
+                    { field: 'whse', displayName: 'WHSE' },
+                    { field: 'type', displayName: 'Type' },
+                    { field: 'avail', displayName: 'Avail' },
+                    { field: 'used', displayName: 'Used' }
+                ];
+
+                $scope.usageGrid = {
+                    data: 'UsageGridData',
+                    columnDefs: 'UsageGridColumnDefinitions',
+                    selectedItems: [],
+                    multiSelect: false
+                }
+            });
+
+        </script>
+        <link rel="stylesheet" href="Styles/jquery-ui.css">
+        <link rel="stylesheet" href="Styles/ng-grid.css" />
+        <link rel="stylesheet" href="Styles/bootstrap.min.css">
+        
+    </head>
+    <body ng-app="morrisonApp">
+        <div ng-controller="DashboardController" class="outerPanel" style="background-color: #FDFDFD">
+            <div style="display: inline-block; vertical-align: top; margin-left: 20px">
+                <fieldset>
+                    <h3>In Transit</h3>
+                    <div class="grid" id="inTransitGrid" style="width: 400px; height: 200px" ng-grid="inTransitGrid">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h3>Recent Deliveries</h3>
+                    <div class="grid" id="recentDeliveriesGrid" style="width: 400px; height: 200px" ng-grid="recentDeliveriesGrid">
+                    </div>
+                </fieldset>
+            </div>
+            <div style="display: inline-block; vertical-align: top; margin-left: 20px">
+                <fieldset>
+                    <h3 class="gridHeader">In/Out</h3>
+                    <div class="grid" id="inOutGrid" style="width: 400px; height: 200px" ng-grid="inOutGrid">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <h3 class="gridHeader">Usage</h3>
+                    <div class="grid" id="usageGrid" style="width: 400px; height: 200px" ng-grid="usageGrid">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </body>
+</html>

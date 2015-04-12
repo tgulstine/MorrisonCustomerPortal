@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<style>
+.barChart {
+  font: 10px sans-serif;
+  margin: 1px;
+  color: white;
+  text-align: right;
+}
+</style>
+
+
+</head>
+<body>
+<div class="barChart"></div>
+</body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+	var barChartData = [ { value: 57, type: "on-time" }, 
+					{ value: 8, type: "late" }, 
+					{ value: 0, type: "" },
+					{ value: 61, type: "on-time" }, 
+					{ value: 12, type: "late" },  
+					{ value: 0, type: "" },
+					{ value: 45, type: "on-time" }, 
+					{ value: 4, type: "late" } ];
+	d3.select(".barChart")
+		.selectAll("div")
+		.data(barChartData)
+	  .enter().append("div")
+		.style("width", function(d) { return d.value * 3 + "px"; })
+		.style("background-color", function(d) { return d.type == "on-time" ? "lightsteelblue" : "lightblue" })
+		.text(function(d) { return d.value; });
+</script>
+</html>

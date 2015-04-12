@@ -1,0 +1,112 @@
+﻿<html>
+    <head>
+	    <title>New User Portal</title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.min.js"></script>
+        <script type="text/javascript" src="Scripts/underscore-min.js"></script>
+        <script type="text/javascript" src="Scripts/ng-grid.min.js"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
+ 
+        <link rel="stylesheet" href="Styles/ng-grid.css" />
+        <link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+
+        <script>
+            angular.module("morrisonApp", ['ngGrid']).controller("NewUserSetupController", function ($scope) {
+
+                var newUserSetupGridData = [
+                                    { customerCode: 'X00000', customerName: "David Miller", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "Sharon Mueller", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' },
+                                    { customerCode: 'X00000', customerName: "", shipper: "", consignee: "", bill: "", seeCharges: "", createShipment: "", statusUpdateRequired: "", active: 'on' }
+                ];
+
+                $scope.NewUserSetupGridData = newUserSetupGridData;
+
+                $scope.NewUserSetupGridColumnData =
+                [
+                    { field: 'customerCode', displayName: 'Customer Code', width: '120px' },
+                    { field: 'customerName', displayName: 'Customer Name', width: '145px' },
+                    { field: 'shipper', displayName: 'Shipper', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' },
+                    { field: 'consignee', displayName: 'Consignee', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' },
+                    { field: 'bill', displayName: 'Bill', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '70px' },
+                    { field: 'seeCharges', displayName: 'See Charges', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' },
+                    { field: 'createShipment', displayName: 'Create Shipment', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' },
+                    { field: 'statusUpdateRequired', displayName: 'Update Req.', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' },
+                    { field: 'active', displayName: 'Active', cellTemplate: '<div><input id="active" type="checkbox" ng-checked="row.entity.active==\'on\'" ng-input="COL_FIELD" ng-model="active" /></div>', width: '80px' }
+                ];
+
+                $scope.newUserSetupGrid = {
+                    data: 'NewUserSetupGridData',
+                    columnDefs: 'NewUserSetupGridColumnData',
+                    selectedItems: [],
+                    multiSelect: false,
+                    headerRowHeight: 50,
+                }
+            });
+
+        </script>
+	    <style>
+		    .form {
+			    margin-left: 70px;
+		    }
+		
+		    h2 {
+			    margin: 40px 0 20px 70px;
+		    }	
+	
+		    .input {
+			    width: 300px;
+		    }
+		
+		    .grid {
+ 			    width: 814px; 
+ 			    margin: 0 auto;
+ 			    margin-top: 40px;	
+		    }
+		
+		    .gridDiv {
+			    width: 814px;
+			    margin: 0 auto;
+		    }
+		
+		    .btn {
+			    float: right;
+			    margin: 20px;
+		    }
+		
+		    .ngHeaderText {
+    		    text-overflow: clip;
+    		    white-space: normal;
+    		    text-align: center;
+		    }
+	    </style>
+    </head>
+    <body ng-app="morrisonApp">
+	    <div class="container">
+		    <h2>New User Portal</h2>
+	 	    <form class="form" role="form">
+  			    <div class="form-group">
+    			    <label for="email">Email address:</label>
+    			    <input type="email" class="form-control input" id="email">
+  			    </div>
+  			    <div class="form-group">
+    			    <label for="pwd">Username:</label>
+    			    <input type="password" class="form-control input" id="pwd">
+  			    </div>
+  		    </form>
+	
+		    <div class="gridDiv">
+    		    <div ng-controller="NewUserSetupController">
+        		    <div class="grid" ng-grid="newUserSetupGrid">
+        		    </div>
+    		    </div>
+    		    <button type="submit" class="btn btn-default">Invite User</button>
+    	    </div>  	
+        </div>
+    </body>
+</html>

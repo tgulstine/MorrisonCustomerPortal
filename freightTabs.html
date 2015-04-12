@@ -1,0 +1,57 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <title></title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.js"></script>
+        <script type="text/javascript" src="Scripts/underscore.js"></script>
+
+        <script>
+            angular.module("morrisonApp", []).controller("FreightTabsController", function ($scope) {
+                $scope.hideTabsExcept = function (tabIndex, tabCount) {
+                $scope.tabClasses = _.range(tabCount).map(function () { return 'horizontalUnselectedTab' });
+                $scope.tabs = _.range(tabCount).map(function () { return false });
+
+                $scope.tabs[tabIndex] = true;
+                $scope.tabClasses[tabIndex] = "horizontalSelectedTab";
+                }
+                $scope.hideTabsExcept(1, 4);
+            });   
+        </script>
+
+        <link rel="stylesheet" href="Styles/jquery-ui.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+        <link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/bootstrap.min.css">
+        
+    </head>
+    <body ng-app="morrisonApp">
+        <div ng-controller="FreightTabsController">
+            <div class="horizontalTabContainer">
+                <div class="horizontalTabBorder">
+                    <div class="horizontalTab" ng-class="tabClasses[0]" ng-click="hideTabsExcept(0, 4)" style="border-right: 1px solid #EAEAEA">Create</div>
+                    <div class="horizontalTab" ng-class="tabClasses[1]" ng-click="hideTabsExcept(1, 4)" style="border-right: 1px solid #EAEAEA">Track</div>
+                    <div class="horizontalTab" ng-class="tabClasses[2]" ng-click="hideTabsExcept(2, 4)" style="border-right: 1px solid #EAEAEA">Reporting</div>
+                    <div class="horizontalTab" ng-class="tabClasses[3]" ng-click="hideTabsExcept(3, 4)">Accounting</div>
+                </div>
+            </div>
+            <div>
+                <div class="horizontalTabPanel" ng-show="tabs[0]">
+                    <div ng-include="'create.html'" style="width: 800px; height: 600px"></div>
+                </div>
+
+                <div class="horizontalTabPanel" ng-show="tabs[1]">
+                    <iframe id="trackFrame" scrolling="no" src="track.html" width="800" height="600" frameborder="0"></iframe>
+                </div>
+
+                <div class="horizontalTabPanel" ng-show="tabs[2]">
+                    <iframe id="reportingFrame" scrolling="no" src="reporting.html" width="800" height="600" frameborder="0"></iframe>
+                </div>
+
+                <div class="horizontalTabPanel" ng-show="tabs[3]">
+                    <div ng-include="'accounting.html'" style="width: 800px; height: 600px"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

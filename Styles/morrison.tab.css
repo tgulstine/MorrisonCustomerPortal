@@ -1,0 +1,208 @@
+﻿/**
+ * CH01 - Layout
+ * CH02 - Tab Controls
+ * CH03 - Tab Panels
+ * CH04 - Miscellaneous
+**/
+
+/* CH01 Layout */
+
+body {
+	margin-left: 20px;
+}     
+ 
+/* CH02 Tab Controls */ 
+ 
+.verticalTab /* Dashboard, Freight, and 3PL tabs */
+{
+text-align: center;
+width: 100px;
+height: 40px;
+line-height: 30px;
+padding-top: 3px;
+vertical-align: middle;
+cursor: pointer;
+}
+
+.verticalSelectedTab
+{
+border-radius: 4px;
+background-color: #67c1e3;
+}
+
+
+.horizontalTabContainer {
+	background-color: white;
+	height: 40px;
+	padding-left: 20px;
+}
+
+.horizontalTabBorder {
+	border: 1px solid #EAEAEA;
+	border-radius: 4px;
+	height: 42px;
+	width: 362px;
+}
+
+.horizontalTab /* Within the Freight panel. Create, Track, Reporting, and Accounting tabs */
+{
+text-align: center;
+padding-top: 2px;
+display: inline-block;
+width: 90px;
+height: 40px;
+float:left;
+line-height: 32px;
+cursor: pointer;
+}
+
+.horizontalSelectedTab
+{
+border-radius: 4px;
+background-color: #D4EEF7;
+}
+
+.horizontalTabFiller
+{
+display: inline-block;
+height: 40px;
+float: left;
+background-color: white;
+}
+
+.horizontalTabSeparator
+{
+display: inline-block; 
+height: 40px;
+float: left;
+background-color: white;
+}
+
+/* CH03 Tab Panels */
+
+.verticalTabPanel
+{
+	background-color: white;
+	margin-left: 10px;
+	border-radius: 4px;
+}
+    
+.horizontalTabPanel
+{
+	clear: both;
+	background-color: #FDFDFD;
+}
+
+#shipmentDetailTabs {
+	width: 100%;
+}
+
+.detailsTabPanel {
+	width: 950px;
+	background-color: #FFFFFF;
+}
+
+.referenceTabPanel {
+	width: 950px;
+	background-color: #FCFCFC;	
+}
+
+.commentsTabPanel {
+	width: 950px;
+	background-color: #FCFCFC;	
+}
+
+.chargesTabPanel {
+	width: 950px;
+	background-color: #FCFCFC;	
+}
+
+.shipperPanel {
+	float: left;
+	width: 306px;
+}
+
+.consigneePanel {
+	float: left;
+	width: 306px;
+}
+
+.billToPanel {
+	float: left;
+	width: 306px;
+}
+
+.panelsRow {
+	width: 950px;
+}
+
+.currentStatusAndRemarksPanels {
+	width: 550px;
+	height: 170px;
+	float: right;
+}
+
+.currentStatusLabel {
+	text-align: left;
+}	
+
+#currentStatusDiv {
+	width: 220px;
+	height: 160px;
+	float: left;
+	text-align: center;
+}
+
+.remarksLabel {
+
+}
+
+#remarksDiv {
+	width: 305px;
+	height: 160px;
+	float: left;
+	margin-left: 7px;
+	text-align: left;
+	
+}
+
+#masterWaybillsDiv {
+	width: 540px;
+	height: 220px;
+	float: left;
+}
+
+.detailsPanelDiv {
+	background-color: #F9F9F9;
+	border: 0.5px solid #DDDDDD;
+	padding: 5px;
+	margin: 5px;
+}
+
+/* CH04 Miscellanous */
+
+.detailForHousebillHeader {
+	width: 100%;
+}
+
+#physicalFreightDiv {
+	width: 388px; 
+	height: 390px;
+	float: left;
+}
+
+.physicalFreightDescription {
+    	width: 376px;
+    	height: 90px;
+    	margin: 0;
+    	margin-top: 10px;
+    	float: left;
+    	border: solid 0.5px gray;
+    	background-color: white;
+    }
+
+.masterWaybillsDiv {
+	width: 382px; 
+	height: 220px;
+	float: right;
+}

@@ -1,0 +1,179 @@
+﻿<html>
+    <head>
+        <title></title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.min.js"></script>
+        <script type="text/javascript" src="Scripts/underscore-min.js"></script>
+        <script type="text/javascript" src="Scripts/ng-grid.min.js"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
+        <script type="text/javascript" src="Scripts/d3.v3.min.js"></script>
+
+        <link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+        <link rel="stylesheet" href="Styles/jquery-ui.css">
+        <link rel="stylesheet" href="Styles/ng-grid.css" />
+        <link rel="stylesheet" href="Styles/bootstrap.min.css">
+
+        <script>
+            angular.module("morrisonApp", ['ngGrid']).controller("ReportingController", function ($scope) {
+                var largestLanesGridData =
+                 [
+                     { origin: "TAI", dest: "LAX", netwgt: "9000", totalwgt: "12000", avgpricekg: "3.50", total: "80000" },
+                     { origin: "HKO", dest: "SFO", netwgt: "13000", totalwgt: "15000", avgpricekg: "2.50", total: "160000" }
+                 ];
+
+                $scope.largestLanesGridData = largestLanesGridData;
+
+                $scope.largestLanesGridColumnData =
+                [
+                    { field: 'origin', displayName: 'Origin', width: 50 },
+                    { field: 'dest', displayName: 'Dest', width: 50 },
+                    { field: 'netwgt', displayName: 'Net Weight' },
+                    { field: 'totalwgt', displayName: 'Total Weight' },
+                    { field: 'avgpricekg', displayName: 'Avg Price/Kg' },
+                    { field: 'total', displayName: 'Total' }
+                ];
+
+                $scope.largestLanesGrid = {
+                    data: 'largestLanesGridData',
+                    columnDefs: 'largestLanesGridColumnData',
+                    selectedItems: [],
+                    multiSelect: false
+                }
+            });
+
+        </script>
+    </head>
+    <body ng-app="morrisonApp">
+        <div class="outerPanel" ng-controller="ReportingController" style="background-color: #FDFDFD">
+            <h3 style="margin-top: 5px">Reporting</h3>
+            <div class="panel">
+                <table style="width: 550px" class="lightGrayBackground">
+                    <tr class="reportingTableRow">
+                        <td>
+                            <span class="link">Shipments In Transit</span>
+                        </td>
+                        <td>
+                            <span class="link"><a target=_blank href="onTimeReport.html">On Time Report</a></span>
+                        </td>
+                    </tr>
+                    <tr class="reportingTableRow">
+                        <td>
+                            <span class="link">RePrint Invoice</span>
+                        </td>
+                        <td>
+                            <span class="link">On Time Summary</span>
+                        </td>
+                    </tr>
+                    <tr class="reportingTableRow">
+                        <td>
+                            <span class="link">Shipment Summary</span>
+                        </td>
+                        <td>
+                            <span class="link">Spend by Origin, Dest., or City Pair</span>
+                        </td>
+                    </tr>
+                    <tr class="reportingTableRow">
+                        <td>
+                            <span class="link">Shipments with Exceptions</span>
+                        </td>
+                        <td>
+                            <span class="link">Invoice Summary</span>
+                        </td>
+                    </tr>
+                    <tr class="reportingTableRow">
+                        <td>
+                            <span class="link">Part and Serial Number Details</span>
+                        </td>
+                        <td>
+                            <span class="link">Invoice Detail</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="customReportsPanel" style="width: 300px; float: right">
+                <fieldset style="width: 300px">
+                    <h3 style="float: right; margin-right: 17px">Custom Reports</h3>
+                    <div class="link" style="float: right">Shipment from PVG Warehouse</div>
+                </fieldset>
+            </div>
+            <p></p>
+            <div class="panel" style="background-color: #FDFDFD">
+                <h3>Shipments by Month</h3>
+                <div class="barChart"></div>
+
+                <script>
+                    var barChartData = [{ value: 57, type: "on-time" },
+                                    { value: 8, type: "late" },
+                                    { value: 0, type: "" },
+                                    { value: 61, type: "on-time" },
+                                    { value: 12, type: "late" },
+                                    { value: 0, type: "" },
+                                    { value: 45, type: "on-time" },
+                                    { value: 4, type: "late" }];
+                    d3.select(".barChart")
+                        .selectAll("div")
+                        .data(barChartData)
+                        .enter().append("div")
+                        .style("width", function (d) { return d.value * 3 + "px"; })
+                        .style("background-color", function (d) { return d.type == "on-time" ? "lightsteelblue" : "lightblue" })
+                        .text(function (d) { return d.value; });
+                </script>
+            </div>
+            <div class="panel" style="background-color: #FDFDFD; margin-left: 15px">
+                <h3>On Time Percent</h3>
+                <div id="pieChart"></div>
+                <script>
+                    var w = 150;
+                    var h = 150;
+                    var r = h / 2;
+                    var color = d3.scale.category20c();
+                    var data = [
+                                    { "label": "On-Time", "value": 87 },
+                                    { "label": "Not On-Time", "value": 9 }
+                    ];
+
+                    var visualizer = d3.select('#pieChart')
+                                .append("svg:svg")
+                                .data([data])
+                                .attr("width", w)
+                                .attr("height", h)
+                                .append("svg:g")
+                                .attr("transform", "translate(" + r + "," + r + ")");
+
+                    var pie = d3.layout.pie().value(function (d) { return d.value; });
+
+                    // declare an arc generator function
+                    var arc = d3.svg.arc().outerRadius(r);
+
+                    // select paths, use arc generator to draw
+                    var arcs = visualizer.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
+                    arcs.append("svg:path")
+                        .attr("fill", function (d, i) {
+                            return color(i);
+                        })
+                        .attr("d", function (d) {
+                            return arc(d);
+                        });
+
+                    // add the text
+                    arcs.append("svg:text")
+                        .attr("transform", function (d) {
+                            d.innerRadius = 0;
+                            d.outerRadius = r;
+                            return "translate(" + arc.centroid(d) + ")";
+                        })
+                        .attr("text-anchor", "middle")
+                        .text(function (d, i) {
+                            return data[i].label;
+                        });
+                </script>
+            </div>
+            <div class="panel" style="background-color: #FDFDFD">
+                <h3>Largest Lanes</h3>
+                <div class="grid" style="width: 350px; height: 250px; margin: 0 auto" ng-grid="largestLanesGrid">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

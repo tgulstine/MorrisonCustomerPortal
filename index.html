@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <title></title>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.js"></script>
+        <script type="text/javascript" src="Scripts/underscore.js"></script>
+
+        <script>
+            angular.module("morrisonApp", []).controller("IndexController", function ($scope) {
+                $scope.hideTabsExcept = function (tabIndex, tabCount) {
+                    $scope.tabClasses = _.range(tabCount).map(function () { return 'verticalUnselectedTab' });
+                    $scope.tabs = _.range(tabCount).map(function () { return false });
+
+                    $scope.tabs[tabIndex] = true;
+                    $scope.tabClasses[tabIndex] = "verticalSelectedTab";
+                }
+                $scope.hideTabsExcept(0, 3);
+            });
+        </script>
+        <link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+        <link rel="stylesheet" href="Styles/bootstrap.min.css">
+    </head>
+    <body ng-app="morrisonApp">
+ 
+        <div class="container-fluid">
+            <div class="container-fluid morrisonHeader">
+                <h2 id="morrisonHeaderText">Morrison Express Tracking</h2>
+            </div>
+            <div ng-controller="IndexController">
+                <div style="display: inline-block; float: left">
+                    <div class="verticalTabFiller" style="height: 10px">&nbsp;</div>
+                    <div class="verticalTab" ng-class="tabClasses[0]" ng-click="hideTabsExcept(0, 3)">Dashboard</div>
+                    <div class="verticalTabPointer"></div>
+                    <div class="verticalTab" ng-class="tabClasses[1]" ng-click="hideTabsExcept(1, 3)">Freight</div>
+                    <div class="verticalTabPointer"></div>
+                    <div class="verticalTab" ng-class="tabClasses[2]" ng-click="hideTabsExcept(2, 3)">3PL/WMS</div>
+                    <div class="verticalTabPointer"></div>
+                    <div class="verticalTabFiller" style="height: 496px"></div>
+                </div>
+                <div style="display: inline-block; float: left;">
+                    <div class="verticalTabPanel" ng-show="tabs[0]" style="width: 1028px; height: 700px">
+                        <iframe id="dashboardFrame" src="dashboard.html" width="950" height="750" frameborder="0"></iframe>
+                    </div>
+                    <div class="verticalTabPanel" ng-show="tabs[1]" style="width: 1028px; height: 700px">
+                        <iframe id="freightTabsFrame" src="freightTabs.html" width="950" height="670" frameborder="0"></iframe>
+                    </div>
+                    <div class="verticalTabPanel" ng-show="tabs[2]" style="width: 950; height: 700px">
+                        <div ng-include="'3pl_wms.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

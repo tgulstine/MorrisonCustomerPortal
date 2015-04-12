@@ -1,0 +1,154 @@
+﻿<!doctype html>
+<html>
+    <head>
+        <script type="text/javascript" src="Scripts/jquery-1.11.2.js"></script>
+        <script type="text/javascript" src="Scripts/angular.js"></script>
+        <script type="text/javascript" src="Scripts/underscore-min.js"></script>
+        <script type="text/javascript" src="Scripts/ng-grid.min.js"></script>
+        <script type="text/javascript" src="Scripts/d3.v3.min.js"></script>
+        <script type="text/javascript" src="Scripts/jquery-ui.js"></script>
+
+        <link rel="stylesheet" href="Styles/jquery-ui.css">
+        <script>
+           angular.module("morrisonApp", ['ngGrid']).controller("ShipmentDetailTabsController", function ($scope) {
+
+               // this is for a tab control accessible from home screen... but what to do about the other screen 
+               $scope.hideTabsExcept = function (tabIndex, tabCount) {
+                   $scope.tabClasses = _.range(tabCount).map(function () { return 'horizontalUnselectedTab' });
+                   $scope.tabs = _.range(tabCount).map(function () { return false });
+
+                   $scope.tabs[tabIndex] = true;
+                   $scope.tabClasses[tabIndex] = "horizontalSelectedTab";
+               }
+               $scope.hideTabsExcept(0, 4);
+
+               $("#addNotification").dialog({
+                   autoOpen: false
+               });
+               $scope.addNotification = function () {
+                   $('#addNotification').dialog('open');
+               }
+
+               var physicalFreightGridData =
+ [
+     { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" },
+     { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" },
+     { pcs: "00", l: "000", w: "000", h: "00000", wgt: "00000", ft3: "000" }
+
+ ];
+
+               $scope.PhysicalFreightGridData = physicalFreightGridData;
+
+               $scope.PhysicalFreightGridColumnData =
+               [
+                   { field: 'pcs', displayName: 'PCS' },
+                   { field: 'l', displayName: 'L' },
+                   { field: 'w', displayName: 'W' },
+                   { field: 'h', displayName: 'H' },
+                   { field: 'wgt', displayName: 'WGT' },
+                   { field: 'ft3', displayName: 'ft3' }
+               ];
+
+
+               $scope.physicalFreightGrid = {
+                   data: 'PhysicalFreightGridData',
+                   columnDefs: 'PhysicalFreightGridColumnData',
+                   selectedItems: [],
+                   multiSelect: false
+               }
+
+               var notificationsGridData =
+                 [
+                     { notifyof: "ALL", type: "email", recipient: "person@doman.com", remove: "X" },
+                     { notifyof: "POD ONLY", type: "sms", recipient: "+886 912-345678", remove: "X" }
+                 ];
+
+               $scope.NotificationsGridData = notificationsGridData;
+
+               $scope.NotificationsGridColumnData =
+               [
+                   { field: 'notifyof', displayName: 'Notify Of' },
+                   { field: 'type', displayName: 'Type' },
+                   { field: 'recipient', displayName: 'Recipient' },
+                   { field: 'remove', displayName: 'Remove' }
+               ];
+
+
+               $scope.notificationsGrid = {
+                   data: 'NotificationsGridData',
+                   columnDefs: 'NotificationsGridColumnData',
+                   selectedItems: [],
+                   multiSelect: false
+               }
+           });
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="Styles/ng-grid.css" />
+	    <link rel="stylesheet" href="Styles/bootstrap.min.css">
+    	<link rel="stylesheet" href="Styles/morrison.tab.css" />
+        <link rel="stylesheet" href="Styles/morrison.controls.css" />
+    
+    </head>
+    <body ng-app="morrisonApp">
+        <div class="outerPanel" ng-controller="ShipmentDetailTabsController">
+    	    <div class="detailForHousebillHeader">
+    		    <legend class="largeHeader">Detail for Housebill XXX00000000</legend>
+    	    </div>
+
+    	    <div class="detailForHousebillTable">
+    		    <table class="table table-striped table-bordered">
+    			    <tr>
+    				    <th>Pickup Date</th>
+    				    <th>Ship Date</th>
+    				    <th>Mode</th>
+    				    <th>Service</th>
+    				    <th>Due Date</th>
+    				    <th>ORG</th>
+    				    <th>DST</th>
+    			    </tr>
+    			    <tr>
+    				    <td>yyyy-mm-dd</td>
+    				    <td>yyyy-mm-dd</td>
+    				    <td>AE</td>
+    				    <td>DTD</td>
+    				    <td>yyyy-mm-dd</td>
+    				    <td>XXX</td>
+    				    <th>XXX</td>
+    			    </tr>
+    		    </table>
+    	    </div>
+
+    	    <div class="panel notifications">NOTIFICATIONS<span class="link addLink" ng-click="addNotification()"><a href="#">+Add</a></span>
+    		    <div class="notificationsGrid" ng-grid="notificationsGrid"></div>
+    	    </div>
+
+    	    <div class="clearBoth"></div>
+
+		    <div id="shipmentDetailTabs" style="margin-left: 20px">
+        		<div class="horizontalTabFiller" style="width: 10px">&nbsp;</div>
+        		<div class="horizontalTab" ng-class="tabClasses[0]" ng-click="hideTabsExcept(0, 4)" style="width: 120px">Details<span class="footnote" style="margin-left: 8px">Alt+F1</span></div>
+        		<div class="horizontalTab" ng-class="tabClasses[1]" ng-click="hideTabsExcept(1, 4)" style="width: 120px">Reference<span class="footnote" style="margin-left: 8px">Alt+F2</span></div>
+        		<div class="horizontalTab" ng-class="tabClasses[2]" ng-click="hideTabsExcept(2, 4)" style="width: 120px">Comments<span class="footnote" style="margin-left: 8px">Alt+F3</span></div>
+        		<div class="horizontalTab" ng-class="tabClasses[3]" ng-click="hideTabsExcept(3, 4)" style="width: 120px">Charges<span class="footnote" style="margin-left: 8px">Alt+F10</span></div>
+        		<div class="horizontalTabFiller" style="width: 438px"></div>
+    	    <div>
+
+        	<div class="horizontalTabPanel detailsTabPanel" ng-show="tabs[0]" style="width: 950px; height: 625px">
+                <iframe id="detailsFrame" scrolling="no" src="details.html" width="1020" height="850" frameborder="0"></iframe>
+            	<!--<div ng-include="'details.html'"></div>-->
+        	</div>
+
+        	<div class="horizontalTabPanel referenceTabPanel" ng-show="tabs[1]" style="width: 950px; height: 625px">
+            	<div ng-include="'reference.html'"></div>
+        	</div>
+
+        	<div class="horizontalTabPanel commentsTabPanel" ng-show="tabs[2]" style="width: 950px; height: 625px">
+            	<div ng-include="'comments.html'"></div>
+        	</div>
+
+        	<div class="horizontalTabPanel chargesTabPanel" ng-show="tabs[3]" style="width: 950px; height: 625px">
+           		<div ng-include="'charges.html'"></div>
+        	</div>
+        </div>
+	</body>
+</html>

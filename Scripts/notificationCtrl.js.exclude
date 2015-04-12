@@ -1,0 +1,6 @@
+﻿angular.module("morrisonApp", ['ngGrid']).controller("NotificationCtrl", function ($scope) {
+
+    $scope.addNotification = function () {
+        $('#addNotification').dialog('open');
+    }
+});

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
+
+    <script>
+
+        angular.module('demo.controllers', [])
+            .controller('DemoCtrl', function ($scope) {
+            'use strict';
+
+        var resultsA = {
+            facets: {
+                Product: {
+                    _type: "terms",
+                    missing: 0,
+                    total: 454,
+                    other: 0,
+                    terms: [{
+                        term: "Prod-A",
+                        count: 306
+                    }, {
+                        term: "Prod-B",
+                        count: 148
+                    }, {
+                        term: "Prod-C",
+                        count: 62
+                    }]
+                },
+                Sex: {
+                    _type: "terms",
+                    missing: 0,
+                    total: 454,
+                    other: 0,
+                    terms: [{
+                        term: "Male",
+                        count: 36
+                    }, {
+                        term: "Female",
+                        count: 148
+                    }]
+                },
+                Times: {
+                    _type: "date_histogram",
+                    entries: [{
+                        time: 1341100800000,
+                        count: 9
+                    }, {
+                        time: 1343779200000,
+                        count: 32
+                    }, {
+                        time: 1346457600000,
+                        count: 78
+                    }, {
+                        time: 1349049600000,
+                        count: 45
+                    }, {
+                        time: 1351728000000,
+                        count: 134
+                    }]
+                }
+            }
+        };
+
+        var resultsB = {
+            facets: {
+                Product: {
+                    _type: "terms",
+                    missing: 0,
+                    total: 454,
+                    other: 0,
+                    terms: [{
+                        term: "Prod-A",
+                        count: 306
+                    }, {
+                        term: "Prod-B",
+                        count: 148
+                    }, {
+                        term: "Prod-C",
+                        count: 0
+                    }]
+                },
+                Sex: {
+                    _type: "terms",
+                    missing: 0,
+                    total: 454,
+                    other: 0,
+                    terms: [{
+                        term: "Male",
+                        count: 36
+                    }]
+                },
+                Times: {
+                    _type: "date_histogram",
+                    entries: [{
+                        time: 1341100800000,
+                        count: 9
+                    }, {
+                        time: 1343779200000,
+                        count: 32
+                    }, {
+                        time: 1346457600000,
+                        count: 78
+                    }]
+                }
+            }
+        };
+
+        $scope.filterSearchA = function (type, term) {
+            switch (currentResults) {
+                case 'A':
+                    $scope.results = resultsB;
+                    currentResults = 'B';
+                    break;
+                case 'B':
+                    $scope.results = resultsA;
+                    currentResults = 'A';
+                    break;
+            }
+        };
+
+        $scope.results = resultsA;
+        var currentResults = 'A';
+
+            });
+
+        angular.module('demo', ['dangle', 'demo.controllers']);
+
+    </script>
+</head>
+<body>
+    <div class="span2" style="height:200px;">
+        <fs:pie outer-radius="100"
+                on-click="filterSearchA"
+                bind="results.facets.Sex" />
+    </div>
+</body>
+</html>

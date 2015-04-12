@@ -1,0 +1,204 @@
+﻿/**
+ * CH01 - Grids
+ * CH02 - Headers
+ * CH03 - Text & Typography
+ * CH04 - Miscellaneous
+**/
+
+/* CH01 - Grids */
+
+     .grid 
+    {
+    	font-size: small;
+        width: 400px;
+        height: 250px;
+        margin-left: 15px;
+	}
+    
+    #recentDeliveriesGrid {
+    	height: 200px;	
+    }
+    
+    #inOutGrid {
+    	height: 250px;
+    	margin-left: 25px;
+    } 
+    
+    #usageGrid {
+    	height: 150px;
+    	margin-left: 25px;
+    }
+    
+	.notificationsGrid {
+    	width: 360px;
+    	height: 120px;
+
+    }
+    
+    .physicalFreightGrid {
+    	width: 375px;
+    	height: 130px;
+    	margin: 0;
+    	float: left;
+    }
+    
+    .masterWaybillsGrid {
+    	width: 530px;
+    	height: 150px;
+    	margin: 0;
+    	float: left;
+    }
+    
+/* CH02 Headers */    
+ 
+     .gridHeader {
+    	margin-left: 25px;
+    }   
+    
+	.tabPanelHeading {
+		font-size: 20px;
+		font-family: "Helvetica Neue";
+		margin: 8px 0 15px 15px;
+	}
+	
+	#morrisonHeaderText {
+		margin-left: 120px;
+		padding-bottom: 20px;
+	}
+	
+	.morrisonHeader {
+		margin-top: 0;
+		padding: 0 0 20px 0;
+		margin-bottom: 20px;
+		height: 80px;
+		width: 100%;
+		background: linear-gradient(0deg, rgba(103,193,227,0), rgba(103,193,227,0.3));		
+	}
+	
+	.largeHeader {
+		font-size: 180%;
+		margin: 20px 0 20px 30px;
+	}
+
+/* CH03 Text & Typography */
+
+    .label
+    {
+        text-align: right;
+        font-weight: bold;
+    }
+    
+    #link
+    {
+        text-decoration: underline;
+    }
+    
+    .btn-default {
+    	margin-top: 10px;
+    }
+    
+    .footnote
+    {
+        font-size: 10px;
+        margin-top: 1px;
+        padding: 0;
+    }  
+    
+    h3 {
+    	margin: 0;
+    	margin-top: 5px;
+    	margin-bottom: 10px;
+    }  
+    
+    .helvetica {
+    	font-family: "Helvetica Neue";
+    	
+    }
+
+
+/* CH04 Miscellaneous */
+	    
+    legend {
+    	margin-left: 15px;
+    }
+    
+    .accountingDiv {
+    	margin: 8px 0 15px 10px;
+    }
+ 
+    .textbox
+    {
+        width: 100px;
+    }
+    
+    .panel
+    {
+        display: inline-block;
+        width: 250px;
+        vertical-align : top;
+        margin: 0 auto;
+    }
+    
+    .button
+    {
+        width: 150px;
+        border-radius: 5px;
+        background-color: lightblue;
+        color: blue;
+    }
+   
+    fieldset
+    {
+        border-radius: 4px;
+    }
+    
+    .outerPanel
+    {
+        padding: 10px;
+        background-color: #FDFDFD;
+    }
+	
+	.pieChart {
+	  font: 10px;
+	  margin: 1px;
+	  color: white;
+	  text-align: right;
+	}
+	
+	.clearBoth {
+		clear: both;
+	}
+	
+	#newWaybillLink {
+		float: right;
+		margin: 5px 25px 0 0;
+		font-size: 16px;
+		text-decoration: underline;
+	}
+	
+	.addLink {
+		float: right;
+	}
+	
+	.notifications {
+		margin-left:17px;
+		width: 360px;
+		height: 140px;
+	}
+
+	.table table-bordered {
+		width: 400px;
+		margin: 0 auto;
+	}
+	
+	.detailForHousebillTable {
+		width: 550px; 
+		float: left; 
+		margin: 35px 20px 20px 20px;
+		text-align: center;
+	}
+	
+	.reportingTableRow {
+		width: 350px;
+		margin: 10px;
+	}
